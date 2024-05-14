@@ -27,6 +27,10 @@ api.add_resource(ChildResource, '/child', '/child/<int:child_id>')
 api.add_resource(BlogResource, '/blog', '/blog/<int:blog_id>')
 api.add_resource(HomeFeedResource, '/homefeed/<int:user_id>')
 
+@app.route('/')
+def home():
+    return "Server is running!"
+
 if __name__ == '__main__':
     app.run(debug=True)
     create_tables()

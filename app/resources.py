@@ -37,7 +37,7 @@ class UserResource(Resource):
         user = User(name=args['name'], email=args['email'], parent_type=args['parent_type'])
         db.session.add(user)
         db.session.commit()
-        return {'message': 'User created successfully.'}, 201
+        return {'id': user.id, 'message': 'User created successfully.'}, 201
 
     def put(self, user_id):
         args = user_parser.parse_args()
@@ -134,17 +134,28 @@ blog_parser.add_argument('content', type=str, required=True, help="Content canno
 blog_parser.add_argument('content_type', type=str, required=True, help="Content Type cannot be blank")
 
 class BlogResource(Resource):
-    def get(self, blog_id):
-        blog = Blog.query.get(blog_id)
-        if blog:
-            return {
+    def get(self, blog_id=None):
+        if blog_id is None:
+            blogs = Blog.query.all()
+            blog_data = [{
                 'id': blog.id, 
                 'title': blog.title, 
                 'content': blog.content, 
                 'content_type': blog.content_type, 
                 'created_at': blog.created_at.strftime('%Y-%m-%d %H:%M:%S')
-            }, 200
-        return {'message': 'Blog not found'}, 404
+            } for blog in blogs]
+            return blog_data, 200
+        else:
+            blog = Blog.query.get(blog_id)
+            if blog:
+                return {
+                    'id': blog.id, 
+                    'title': blog.title, 
+                    'content': blog.content, 
+                    'content_type': blog.content_type, 
+                    'created_at': blog.created_at.strftime('%Y-%m-%d %H:%M:%S')
+                }, 200
+            return {'message': 'Blog not found'}, 404
 
     def post(self):
         args = blog_parser.parse_args()

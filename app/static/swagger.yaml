@@ -32,6 +32,7 @@ paths:
       parameters:
         - in: body
           name: user
+          description: User data
           required: true
           schema:
             $ref: '#/definitions/User'
@@ -67,6 +68,7 @@ paths:
           type: integer
         - in: body
           name: user
+          description: Updated user data
           required: true
           schema:
             $ref: '#/definitions/User'
@@ -109,6 +111,7 @@ paths:
       parameters:
         - in: body
           name: child
+          description: Child data
           required: true
           schema:
             $ref: '#/definitions/Child'
@@ -144,6 +147,7 @@ paths:
           type: integer
         - in: body
           name: child
+          description: Updated child data
           required: true
           schema:
             $ref: '#/definitions/Child'
@@ -168,6 +172,17 @@ paths:
           description: Child not found
 
   /blog:
+    get:
+      summary: Get all blog posts
+      tags:
+        - Blog
+      responses:
+        200:
+          description: Successfully retrieved all blogs
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Blog'
     post:
       summary: Create a new blog
       tags:
@@ -175,6 +190,7 @@ paths:
       parameters:
         - in: body
           name: blog
+          description: Blog data
           required: true
           schema:
             $ref: '#/definitions/Blog'
@@ -210,6 +226,7 @@ paths:
           type: integer
         - in: body
           name: blog
+          description: Updated blog data
           required: true
           schema:
             $ref: '#/definitions/Blog'
@@ -314,4 +331,3 @@ definitions:
       recommended_age_range:
         type: string
         description: Recommended age range for the blog readers
-

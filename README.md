@@ -1,5 +1,7 @@
 # Parentune Backend Assignment
 
+[Deployed Link](https://backend-parentune.onrender.com/)
+
 This is the Backend designed to manage users, children, blogs, and generate home feeds based on user data. The API is built with Flask.
 
 ## Features

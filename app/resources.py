@@ -13,12 +13,12 @@ class UserResource(Resource):
     def get(self, user_id=None):
         if user_id is None:
             users = User.query.all()
-            return jsonify([{
+            return [{
                 'id': user.id, 
                 'name': user.name, 
                 'email': user.email, 
                 'parent_type': user.parent_type
-            } for user in users]), 200
+            } for user in users], 200
         else:
             # Return specific user
             user = User.query.get(user_id)

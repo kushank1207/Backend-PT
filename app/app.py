@@ -11,7 +11,7 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 api = Api(app)
 
-migrate = Migrate(app, db)
+# migrate = Migrate(app, db)
 
 def create_tables():
     with app.app_context():

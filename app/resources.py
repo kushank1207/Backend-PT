@@ -20,7 +20,6 @@ class UserResource(Resource):
                 'parent_type': user.parent_type
             } for user in users], 200
         else:
-            # Return specific user
             user = User.query.get(user_id)
             if user:
                 return {

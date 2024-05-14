@@ -1,0 +1,317 @@
+swagger: '2.0'
+info:
+  title: Parentune Backend Assignment
+  version: "1.0"
+  description: API for managing users, children, blogs, and generating home feeds based on user data.
+host: 'localhost:5000'
+schemes:
+  - http
+basePath: /
+produces:
+  - application/json
+consumes:
+  - application/json
+
+paths:
+  /user:
+    get:
+      summary: Retrieve all users
+      tags:
+        - User
+      responses:
+        200:
+          description: Successfully retrieved all users
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+    post:
+      summary: Create a new user
+      tags:
+        - User
+      parameters:
+        - in: body
+          name: user
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        201:
+          description: User created successfully
+
+  /user/{user_id}:
+    get:
+      summary: Retrieve a single user by ID
+      tags:
+        - User
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Successfully retrieved user
+          schema:
+            $ref: '#/definitions/User'
+        404:
+          description: User not found
+    put:
+      summary: Update an existing user
+      tags:
+        - User
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: integer
+        - in: body
+          name: user
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: User updated successfully
+        404:
+          description: User not found
+    delete:
+      summary: Delete a user
+      tags:
+        - User
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        204:
+          description: User deleted successfully
+        404:
+          description: User not found
+
+  /child:
+    get:
+      summary: Retrieve all children
+      tags:
+        - Child
+      responses:
+        200:
+          description: Successfully retrieved all children
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Child'
+    post:
+      summary: Create a new child
+      tags:
+        - Child
+      parameters:
+        - in: body
+          name: child
+          required: true
+          schema:
+            $ref: '#/definitions/Child'
+      responses:
+        201:
+          description: Child created successfully
+
+  /child/{child_id}:
+    get:
+      summary: Retrieve a single child by ID
+      tags:
+        - Child
+      parameters:
+        - name: child_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Successfully retrieved child
+          schema:
+            $ref: '#/definitions/Child'
+        404:
+          description: Child not found
+    put:
+      summary: Update an existing child
+      tags:
+        - Child
+      parameters:
+        - name: child_id
+          in: path
+          required: true
+          type: integer
+        - in: body
+          name: child
+          required: true
+          schema:
+            $ref: '#/definitions/Child'
+      responses:
+        200:
+          description: Child updated successfully
+        404:
+          description: Child not found
+    delete:
+      summary: Delete a child
+      tags:
+        - Child
+      parameters:
+        - name: child_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        204:
+          description: Child deleted successfully
+        404:
+          description: Child not found
+
+  /blog:
+    post:
+      summary: Create a new blog
+      tags:
+        - Blog
+      parameters:
+        - in: body
+          name: blog
+          required: true
+          schema:
+            $ref: '#/definitions/Blog'
+      responses:
+        201:
+          description: Blog created successfully
+
+  /blog/{blog_id}:
+    get:
+      summary: Retrieve a single blog by ID
+      tags:
+        - Blog
+      parameters:
+        - name: blog_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Successfully retrieved blog
+          schema:
+            $ref: '#/definitions/Blog'
+        404:
+          description: Blog not found
+    put:
+      summary: Update an existing blog
+      tags:
+        - Blog
+      parameters:
+        - name: blog_id
+          in: path
+          required: true
+          type: integer
+        - in: body
+          name: blog
+          required: true
+          schema:
+            $ref: '#/definitions/Blog'
+      responses:
+        200:
+          description: Blog updated successfully
+        404:
+          description: Blog not found
+    delete:
+      summary: Delete a blog
+      tags:
+        - Blog
+      parameters:
+        - name: blog_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        204:
+          description: Blog deleted successfully
+        404:
+          description: Blog not found
+
+  /homefeed/{user_id}:
+    get:
+      summary: Retrieve the home feed for a specific user
+      tags:
+        - HomeFeed
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Successfully retrieved home feed
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Blog'
+        404:
+          description: User not found
+
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+      name:
+        type: string
+      email:
+        type: string
+      parent_type:
+        type: string
+
+  Child:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+      parent_id:
+        type: integer
+      name:
+        type: string
+      date_of_birth:
+        type: string
+        format: date
+      gender:
+        type: string
+
+  Blog:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+      title:
+        type: string
+      content:
+        type: string
+      content_type:
+        type: string
+      created_at:
+        type: string
+        format: date-time
+
+  BlogMetadata:
+    type: object
+    properties:
+      blog_id:
+        type: integer
+        description: Foreign key linking to the Blog id
+      tags:
+        type: string
+        description: Tags associated with the blog
+      recommended_age_range:
+        type: string
+        description: Recommended age range for the blog readers
+
